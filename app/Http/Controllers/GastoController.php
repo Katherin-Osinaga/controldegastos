@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Gasto;
 
 class GastoController extends Controller
 {
@@ -13,7 +14,8 @@ class GastoController extends Controller
      */
     public function index()
     {
-        return view('gasto.gastos');
+        $datos=Gasto::all();
+        return view('gasto.index',compact('datos'));
     }
 
     /**
@@ -23,7 +25,7 @@ class GastoController extends Controller
      */
     public function create()
     {
-        //
+        return view('gasto.create');
     }
 
     /**
@@ -34,7 +36,14 @@ class GastoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $datos= new Gasto();
+        $datos->nombre_gasto =$request->name_g;
+        $datos->descripcion_gasto =$request->descripcion_g;
+        $datos->monto_gasto =$request->monto_g;
+        $datos->fecha_gasto =$request->fecha_g;
+        $datos->save();
+        $datos=Gasto::all();
+        return view('gasto.index', compact('datos'));
     }
 
     /**
@@ -43,9 +52,9 @@ class GastoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Gasto $gasto)
     {
-        //
+        return view('gasto.show', compact('gasto'));
     }
 
     /**
@@ -54,9 +63,9 @@ class GastoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Gasto $gasto)
     {
-        //
+        return view('gasto.edit', compact('gasto'));
     }
 
     /**
@@ -66,9 +75,15 @@ class GastoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Gasto $gasto)
     {
-        //
+        $gasto->nombre_gasto =$request->name_g;
+        $gasto->descripcion_gasto =$request->descripcion_g;
+        $gasto->monto_gasto =$request->monto_g;
+        $gasto->fecha_gasto =$request->fecha_g;
+        $gasto->save();
+        $datos=Gasto::all();
+        return view('gasto.index', compact('datos'));
     }
 
     /**
@@ -77,8 +92,10 @@ class GastoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Gasto $gasto)
     {
-        //
+       $gasto->delete();
+       $datos=Gasto::all();
+       return view('gasto.index', compact('datos'));
     }
 }

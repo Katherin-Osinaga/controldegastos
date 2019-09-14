@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Ingreso;
 
 class IngresoController extends Controller
 {
@@ -13,7 +14,8 @@ class IngresoController extends Controller
      */
     public function index()
     {
-        return view('ingreso.ingresos');
+        $datos=Ingreso::all();
+        return view('ingreso.index', compact('datos'));
     }
 
     /**
@@ -23,7 +25,7 @@ class IngresoController extends Controller
      */
     public function create()
     {
-        //
+        return view('ingreso.create');
     }
 
     /**
@@ -34,7 +36,14 @@ class IngresoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $datos= new Ingreso();
+        $datos->nombre_ingreso =$request->name_i;
+        $datos->descripcion_ingreso =$request->descripcion_i;
+        $datos->monto_ingreso =$request->monto_i;
+        $datos->fecha_ingreso =$request->fecha_i;
+        $datos->save();
+        $datos=Ingreso::all();
+        return view('ingreso.index', compact('datos'));
     }
 
     /**
@@ -43,9 +52,9 @@ class IngresoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Ingreso $ingreso)
     {
-        //
+        return view('ingreso.show',compact('ingreso'));
     }
 
     /**
@@ -54,9 +63,9 @@ class IngresoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Ingreso $ingreso)
     {
-        //
+        return view('ingreso.edit',compact('ingreso'));
     }
 
     /**
@@ -66,9 +75,15 @@ class IngresoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Ingreso $ingreso)
     {
-        //
+        $ingreso->nombre_ingreso =$request->name_i;
+        $ingreso->descripcion_ingreso =$request->descripcion_i;
+        $ingreso->monto_ingreso =$request->monto_i;
+        $ingreso->fecha_ingreso =$request->fecha_i;
+        $ingreso->save();
+        $datos=Ingreso::all();
+        return view('ingreso.index', compact('datos'));
     }
 
     /**
@@ -77,8 +92,10 @@ class IngresoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Ingreso $ingreso)
     {
-        //
+        $ingreso->delete();
+        $datos=Ingreso::all();
+        return view('ingreso.index', compact('datos'));
     }
 }

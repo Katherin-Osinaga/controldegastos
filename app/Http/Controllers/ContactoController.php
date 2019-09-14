@@ -54,9 +54,9 @@ class ContactoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Contacto $contacto)
     {
-        //
+        return view ('contacto.show',compact('contacto'));
     }
 
     /**
@@ -65,9 +65,9 @@ class ContactoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Contacto $contacto)
     {
-        //
+        return view ('contacto.edit', compact('contacto'));
     }
 
     /**
@@ -77,9 +77,16 @@ class ContactoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Contacto $contacto)
     {
-        //
+        $contacto->nombre=$request->name;
+        $contacto->apellido=$request->lastname;
+        $contacto->telefono=$request->number;
+        $contacto->direccion=$request->address;
+        $contacto->ci=$request->cia;
+        $contacto->save();
+        $datos=Contacto::all();
+        return view('contacto.index', compact('datos'));
     }
 
     /**
@@ -88,8 +95,10 @@ class ContactoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Contacto $contacto)
     {
-        //
+        $contacto->delete();
+        $datos=Contacto::all();
+        return view('contacto.index', compact('datos'));
     }
 }

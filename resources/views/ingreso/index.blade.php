@@ -1,19 +1,19 @@
 @extends('layout.layouts')
-@section('title','Contacto')
+@section('title','ingreso')
 @section('content')
-<a href="/contactos/create" class="btn btn-primary mb-2">Nuevo</a>
+<a href="/ingresos/create" class="btn btn-primary mb-2">Nuevo</a>
     <div class="row">
-        @foreach ($datos as $contacto)
+        @foreach ($datos as $ingreso)
             <div class="col-4">
                 <div class="card mt-3">
                     <div class="card-header">
-                        <p>{{ $contacto->nombre }} {{ $contacto->apellido }}</p>
+                        <p>{{ $ingreso->nombre_ingreso }}</p>
                     </div>
                     <div class="card-body">
-                        <p>Telefono : {{ $contacto->telefono }}</p>
+                        <p>Fecha : {{ $ingreso->fecha_ingreso }}</p>
                     </div>
                     <div class="card-footer">
-                        <form action="/contactos/{{ $contacto->id }}">
+                        <form action="/ingresos/{{ $ingreso->id }}">
                             @csrf 
                             @method('GET')
                             <button class="btn btn-primary">Ver mas</button>
