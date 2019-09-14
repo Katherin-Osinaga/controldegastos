@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Contacto;
+
 
 class ContactoController extends Controller
 {
@@ -13,7 +15,8 @@ class ContactoController extends Controller
      */
     public function index()
     {
-        return view('contacto.contactos');
+        $datos=Contacto::all();
+        return view('contacto.index',compact('datos'));
     }
 
     /**
@@ -23,7 +26,7 @@ class ContactoController extends Controller
      */
     public function create()
     {
-        //
+        return view('contacto.create');
     }
 
     /**
@@ -34,7 +37,15 @@ class ContactoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $datos=new Contacto();
+        $datos->nombre=$request->name;
+        $datos->apellido=$request->lastname;
+        $datos->telefono=$request->number;
+        $datos->direccion=$request->address;
+        $datos->ci=$request->cia;
+        $datos->save();
+        $datos=Contacto::all();
+        return view('contacto.index', compact('datos'));
     }
 
     /**
