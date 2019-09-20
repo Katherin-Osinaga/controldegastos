@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Mail\MessageReceived;
 use App\Contacto;
+use Illuminate\Support\Facades\Mail;
 
 
 class ContactoController extends Controller
@@ -37,13 +39,18 @@ class ContactoController extends Controller
      */
     public function store(Request $request)
     {
-        $datos=new Contacto();
-        $datos->nombre=$request->name;
-        $datos->apellido=$request->lastname;
-        $datos->telefono=$request->number;
-        $datos->direccion=$request->address;
-        $datos->ci=$request->cia;
-        $datos->save();
+            request()->validate([
+                'name' =>'required',
+                'lastname' =>'required',
+                'number' =>'required',
+                'address' =>'required',
+                'cia' =>'required',
+
+            ]);
+            
+            Mail::to('katherin.osinaga.357@gamil.com')->send( new MessageReceived);
+
+
         $datos=Contacto::all();
         return view('contacto.index', compact('datos'));
     }
