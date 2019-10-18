@@ -14,6 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');
+Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');
 Route::resource('/gastos', 'GastoController');
 Route::resource('/ingresos', 'IngresoController');
 Route::resource('/contactos', 'ContactoController');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

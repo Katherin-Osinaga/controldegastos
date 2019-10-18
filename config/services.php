@@ -29,5 +29,10 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'facebook' => [
+        'client_id' => '2211510102312134',
+        'client_secret' => 'dc8881a379d78fdeafd6ac1474e561fd',
+        'redirect' => 'http://gastos.test:8888/login/facebook/callback',
+    ],
 
 ];
